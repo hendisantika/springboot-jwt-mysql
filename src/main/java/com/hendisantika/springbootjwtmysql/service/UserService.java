@@ -26,7 +26,28 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
-    public User save(User user) {
+    public User getById(int id) {
+        return userRepository.getById(id);
+    }
+
+    public User saveOrUpdate(User user) {
         return userRepository.save(user);
+
+    }
+
+    public void savePasswordToken(String token, int userId) {
+        userRepository.savePasswordToken(token, userId);
+    }
+
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public String getTokenByUserName(String username) {
+        return userRepository.getTokenByUserName(username);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.getByEmailAddress(username);
     }
 }
