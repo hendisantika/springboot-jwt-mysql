@@ -19,4 +19,8 @@ mvn clean spring-boot:run
 
 #### Screen shot
 
+Add new User
+
+![Add New User](img/)
+
 
