@@ -26,8 +26,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into token (token, userId, expirationTime) values (token, userId, now() + interval 1 DAY )", nativeQuery = true)
+    @Query(value = "insert into token (id, token, user_id, expiration_time) values (id, token, user_id, now() + interval 1 DAY )", nativeQuery = true)
     void savePasswordToken(
+            @Param(value = "id") String id,
             @Param(value = "token") String token,
             @Param(value = "userId") int userId
     );
