@@ -21,6 +21,10 @@ mvn clean spring-boot:run
 
 Add new User
 
-![Add New User](img/)
+![Add New User](img/add.png "Add New User")
+
+Authenticate User
+
+![Authenticate User](img/authenticate.png "Authenticate User")
 
 
