@@ -35,8 +35,8 @@ public class UserService {
 
     }
 
-    public void savePasswordToken(String token, int userId) {
-        userRepository.savePasswordToken(token, userId);
+    public void savePasswordToken(String id, String token, int userId) {
+        userRepository.savePasswordToken(id, token, userId);
     }
 
     public void deleteById(int id) {
