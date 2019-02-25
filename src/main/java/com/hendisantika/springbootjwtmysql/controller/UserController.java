@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,7 +58,8 @@ public class UserController {
                 .compact();
         response.put("token", token);
         response.put("user", existingUser);
-        userService.savePasswordToken(token, existingUser.getId());
+        UUID id = UUID.randomUUID();
+        userService.savePasswordToken(id.toString(), token, existingUser.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
