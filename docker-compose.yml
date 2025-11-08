@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:9.5.0
+    container_name: jwt-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 53cret
+      MYSQL_DATABASE: jwt
+      MYSQL_USER: yu71
+      MYSQL_PASSWORD: 53cret
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+
+volumes:
+  mysql-data:
