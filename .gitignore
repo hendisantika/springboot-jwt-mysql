@@ -1,5 +1,7 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+mysql_data
+logs
 
 ### STS ###
 .apt_generated
