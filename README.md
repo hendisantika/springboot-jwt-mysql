@@ -79,6 +79,66 @@ Once started, the application will be available at:
 http://localhost:8090
 ```
 
+## API Endpoints
+
+The application provides the following REST API endpoints:
+
+### Get All Users
+
+```bash
+curl http://localhost:8090/users
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "salary": 50000
+  }
+]
+```
+
+### Create a New User
+
+```bash
+curl -X POST http://localhost:8090/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "salary": 50000
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "salary": 50000
+}
+```
+
+### Example Workflow
+
+```bash
+# 1. Create first user
+curl -X POST http://localhost:8090/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Alice Smith", "salary": 60000}'
+
+# 2. Create second user
+curl -X POST http://localhost:8090/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Bob Johnson", "salary": 55000}'
+
+# 3. Get all users
+curl http://localhost:8090/users
+```
+
 ## Technology Stack
 
 - **Spring Boot 3.5.7** - Main framework
