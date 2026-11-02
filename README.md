@@ -1,10 +1,16 @@
 # springboot-jwt-mysql
 
+[![Java CI with Maven](https://github.com/hendisantika/springboot-jwt-mysql/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/springboot-jwt-mysql/actions/workflows/maven.yml)
+![Java](https://img.shields.io/badge/Java-25-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-brightgreen)
+![Dependabot](https://img.shields.io/badge/Dependabot-enabled-blue?logo=dependabot)
+
 This is a simple demo of creating REST APIs using Spring Boot and MySQL database.
 
 ## Features
 
-- Spring Boot 3.5.7
+- Spring Boot 4.1.2
+- Java 25
 - Spring Data JPA
 - MySQL 9.5.0 with Docker Compose
 - Automatic Docker Compose lifecycle management
@@ -12,9 +18,9 @@ This is a simple demo of creating REST APIs using Spring Boot and MySQL database
 
 ## Prerequisites
 
-- Java 21 or higher
+- Java 25 (JDK 25)
 - Docker Desktop or Docker Engine
-- Maven 3.6.3 or higher
+- Maven 3.9.x (or use the bundled Maven Wrapper `./mvnw`)
 
 ## Database Configuration
 
@@ -44,7 +50,7 @@ will:
 ### Option 1: Using Maven
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 The application will start on port 8090 and automatically manage the Docker Compose services.
@@ -52,7 +58,7 @@ The application will start on port 8090 and automatically manage the Docker Comp
 ### Option 2: Using the JAR file
 
 ```bash
-mvn clean package
+./mvnw clean package
 java -jar target/springboot-jwt-mysql-0.0.1-SNAPSHOT.jar
 ```
 
@@ -65,7 +71,7 @@ If you prefer to manage Docker Compose manually:
 docker-compose up -d
 
 # Run the application
-mvn spring-boot:run
+./mvnw spring-boot:run
 
 # Stop MySQL container when done
 docker-compose down
@@ -141,15 +147,45 @@ curl http://localhost:8090/users
 
 ## Technology Stack
 
-- **Spring Boot 3.5.7** - Main framework
+- **Java 25** - Language & runtime
+- **Spring Boot 4.1.2** - Main framework
 - **Spring Data JPA** - Database access layer
-- **Hibernate 6.6** - ORM
+- **Hibernate 7** - ORM
 - **MySQL Connector/J** - MySQL JDBC driver
 - **Spring Boot Docker Compose** - Automatic container lifecycle management
 - **Lombok** - Reduce boilerplate code
 
+## Continuous Integration
+
+GitHub Actions workflow [`.github/workflows/maven.yml`](.github/workflows/maven.yml) runs on every push and pull request to `master`:
+
+- Sets up **Temurin JDK 25** with Maven dependency caching
+- Starts a **MySQL 9.5.0 service container** so the `contextLoads` integration test can connect to the database
+- Builds and tests the project with `./mvnw -B verify`
+- On push to `master`, submits the Maven dependency graph to GitHub to improve Dependabot alerts
+
+Run the same build locally (MySQL must be running, e.g. `docker compose up -d`):
+
+```bash
+./mvnw -B verify
+```
+
+## Dependency Updates (Dependabot)
+
+Dependabot is configured in [`.github/dependabot.yml`](.github/dependabot.yml):
+
+| Ecosystem        | Schedule (Asia/Jakarta) | Notes                                                                 |
+|------------------|-------------------------|-----------------------------------------------------------------------|
+| `maven`          | Daily, 21:00            | Spring Boot updates grouped; other minor/patch updates grouped        |
+| `github-actions` | Weekly (Monday), 21:00  | All action updates grouped into a single PR                           |
+| `docker-compose` | Weekly (Monday), 21:00  | Keeps the MySQL image in `docker-compose.yml` up to date              |
+
+Dependabot PRs are labeled (`dependencies`, `java`, `github-actions`, `docker`) and use conventional commit prefixes
+(`chore(deps)`, `chore(ci)`, `chore(docker)`).
+
 ## Additional Notes
 
-- The MySQL data is persisted in a Docker volume named `mysql-data`
+- The MySQL data is persisted in the local `./mysql-data` directory (bind mount)
 - The application automatically creates the database schema on startup using Hibernate's `ddl-auto=update`
 - SQL queries are logged to the console for debugging purposes
+- Lombok is configured as an explicit annotation processor in `pom.xml`, which is required on JDK 23+
